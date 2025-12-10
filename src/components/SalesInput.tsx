@@ -1,14 +1,16 @@
 import { useState } from 'react';
 
-const CATEGORIES = ['Pre', 'CC', 'NMP', 'MA', 'EA'] as const;
+const CATEGORIES = ['Pre', 'CC', 'CC Apt', 'NMP', 'MA', 'EA'] as const;
 
 type CategoryInputs = Record<string, string>;
 
 interface SalesInputProps {
 	onAddSale: (sales: Record<string, number>) => void;
+	storeNumber: string;
+	onStoreNumberChange: (value: string) => void;
 }
 
-export function SalesInput({ onAddSale }: SalesInputProps) {
+export function SalesInput({ onAddSale, storeNumber, onStoreNumberChange }: SalesInputProps) {
 	const [inputs, setInputs] = useState<CategoryInputs>(() => CATEGORIES.reduce((acc, cat) => ({ ...acc, [cat]: '' }), {}));
 
 	const handleInputChange = (category: string, value: string) => {
@@ -49,6 +51,22 @@ export function SalesInput({ onAddSale }: SalesInputProps) {
 		<div className="w-full max-w-sm mx-auto p-4">
 			<h2 className="text-xl font-bold mb-4 text-center text-gray-800">Add Sales</h2>
 			<div className="space-y-3">
+				{/* Store Number Input */}
+				<div className="flex items-center gap-3 pb-3 border-b border-gray-300">
+					<label htmlFor="store-number" className="w-16 text-right font-semibold text-gray-700">
+						Store:
+					</label>
+					<input
+						id="store-number"
+						type="text"
+						inputMode="numeric"
+						pattern="[0-9]*"
+						value={storeNumber}
+						onChange={(e) => onStoreNumberChange(e.target.value)}
+						placeholder="1234"
+						className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-center text-lg"
+					/>
+				</div>
 				{CATEGORIES.map((category) => (
 					<div key={category} className="flex items-center gap-3">
 						<label htmlFor={category} className="w-16 text-right font-semibold text-gray-700">

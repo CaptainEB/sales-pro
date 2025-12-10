@@ -1,4 +1,4 @@
-const CATEGORIES = ['Pre', 'CC', 'NMP', 'MA', 'EA'] as const;
+const CATEGORIES = ['Pre', 'CC', 'CC Apt', 'NMP', 'MA', 'EA'] as const;
 
 type SalesData = Record<string, number[]>;
 
