@@ -1,73 +1,52 @@
-# React + TypeScript + Vite
+# Sales Pro
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A lightweight sales tracking dashboard for recording and monitoring daily sales across multiple categories. Perfect for retail environments where quick data entry and real-time totals are essential.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **5 Sales Categories**: Pre, CC, NMP, MA, EA
+- **Quick Entry**: Input multiple sales at once with a single button click
+- **Live Totals**: Automatic calculation of category totals
+- **Individual Tracking**: View each sale alongside totals (e.g., "MA: 10, 20, 5, 10 TOTAL: 45")
+- **Data Persistence**: Sales data saved in browser localStorage
+- **Daily Reset**: Clear all data with one button for fresh starts
+- **Mobile-First**: Optimized for phone usage with responsive desktop support
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+- React 19 + TypeScript
+- Vite 7 with SWC
+- Tailwind CSS 4
+- Bun package manager
 
-## Expanding the ESLint configuration
+## Usage
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **Enter Sales**: Type sale amounts in the input fields for any categories
+2. **Add Sale**: Click the "Add Sale" button to record all entered values
+3. **View Summary**: Scroll down to see individual sales and running totals per category
+4. **Clear Day**: Use the "Clear Day" button to reset all data when starting a new day
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Example Workflow
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+```
+Input:  MA: 10    NMP: 20
+        EA: 15
+Click "Add Sale"
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Later:  MA: 5     CC: 10
+Click "Add Sale"
+
+Result:
+  MA: 10, 5  TOTAL: 15
+  CC: 10     TOTAL: 10
+  NMP: 20    TOTAL: 20
+  EA: 15     TOTAL: 15
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Data Persistence
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Sales data is automatically saved to browser localStorage. Data persists across browser sessions until manually cleared with the "Clear Day" button.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## License
+
+MIT
