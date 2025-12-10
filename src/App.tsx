@@ -1,8 +1,8 @@
+import { useState } from 'react';
+import { ReportSection } from './components/ReportSection';
 import { SalesInput } from './components/SalesInput';
 import { SalesSummary } from './components/SalesSummary';
-import { ReportSection } from './components/ReportSection';
 import { useLocalStorage } from './hooks/useLocalStorage';
-import { useState } from 'react';
 
 const CATEGORIES = ['Pre', 'CC', 'CC Apt', 'NMP', 'MA', 'EA'] as const;
 
