@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { SalesInput } from './components/SalesInput';
+import { SalesSummary } from './components/SalesSummary';
+import { useLocalStorage } from './hooks/useLocalStorage';
+
+const CATEGORIES = ['Pre', 'CC', 'NMP', 'MA', 'EA'] as const;
+
+type SalesData = Record<string, number[]>;
+
+const initialSalesData: SalesData = CATEGORIES.reduce((acc, cat) => ({ ...acc, [cat]: [] }), {});
 
 function App() {
-  const [count, setCount] = useState(0)
+	const [salesData, setSalesData, clearSalesData] = useLocalStorage<SalesData>('sales-pro-data', initialSalesData);
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+	const handleAddSale = (newSales: Record<string, number>) => {
+		setSalesData((prev) => {
+			const updated = { ...prev };
+			for (const [category, amount] of Object.entries(newSales)) {
+				updated[category] = [...(updated[category] || []), amount];
+			}
+			return updated;
+		});
+	};
+
+	const handleClearDay = () => {
+		clearSalesData();
+	};
+
+	return (
+		<div className="min-h-screen bg-gray-100 py-8 px-4">
+			<div className="max-w-lg mx-auto">
+				<h1 className="text-3xl font-bold text-center text-gray-900 mb-8">Sales Pro</h1>
+				<div className="bg-white rounded-xl shadow-lg overflow-hidden">
+					<SalesInput onAddSale={handleAddSale} />
+					<div className="border-t border-gray-200" />
+					<SalesSummary salesData={salesData} onClearDay={handleClearDay} />
+				</div>
+			</div>
+		</div>
+	);
 }
 
-export default App
+export default App;
