@@ -1,3 +1,15 @@
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+
 const CATEGORIES = ['Pre', 'CC', 'CC Apt', 'NMP', 'MA', 'EA'] as const;
 
 type SalesData = Record<string, number[]>;
@@ -41,12 +53,25 @@ export function SalesSummary({ salesData, onClearDay }: SalesSummaryProps) {
 			</div>
 
 			{hasAnySales && (
-				<button
-					onClick={onClearDay}
-					className="w-full mt-6 py-3 px-4 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg transition-colors duration-200 active:scale-95"
-				>
-					Clear Day
-				</button>
+				<AlertDialog>
+					<AlertDialogTrigger asChild>
+						<button className="w-full mt-6 py-3 px-4 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg transition-colors duration-200 active:scale-95">
+							Clear Day
+						</button>
+					</AlertDialogTrigger>
+					<AlertDialogContent>
+						<AlertDialogHeader>
+							<AlertDialogTitle>Clear Today's Sales?</AlertDialogTitle>
+							<AlertDialogDescription>This will permanently delete all sales data for today. This action cannot be undone.</AlertDialogDescription>
+						</AlertDialogHeader>
+						<AlertDialogFooter>
+							<AlertDialogCancel>Cancel</AlertDialogCancel>
+							<AlertDialogAction onClick={onClearDay} className="bg-red-500 hover:bg-red-600">
+								Clear Day
+							</AlertDialogAction>
+						</AlertDialogFooter>
+					</AlertDialogContent>
+				</AlertDialog>
 			)}
 		</div>
 	);

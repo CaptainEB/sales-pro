@@ -33,7 +33,8 @@ export function ReportSection({ salesData, storeNumber }: ReportSectionProps) {
 				continue;
 			}
 
-			lines.push(`${category}: ${total}`);
+			// Show empty string if total is 0, otherwise show the total
+			lines.push(`${category}: ${total === 0 ? '' : total}`);
 		}
 
 		return lines.join('\n');
