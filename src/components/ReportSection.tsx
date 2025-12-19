@@ -33,8 +33,9 @@ export function ReportSection({ salesData, storeNumber }: ReportSectionProps) {
 				continue;
 			}
 
-			// Show empty string if total is 0, otherwise show the total
-			lines.push(`${category}: ${total === 0 ? '' : total}`);
+			// Add $ only for MA and EA (money amounts), not for unit counts
+			const prefix = category === 'MA' || category === 'EA' ? '$' : '';
+			lines.push(`${category}: ${total === 0 ? '' : prefix + total}`);
 		}
 
 		return lines.join('\n');

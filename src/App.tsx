@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { ReportSection } from './components/ReportSection';
 import { SalesInput } from './components/SalesInput';
 import { SalesSummary } from './components/SalesSummary';
@@ -12,7 +11,7 @@ const initialSalesData: SalesData = CATEGORIES.reduce((acc, cat) => ({ ...acc, [
 
 function App() {
 	const [salesData, setSalesData, clearSalesData] = useLocalStorage<SalesData>('sales-pro-data', initialSalesData);
-	const [storeNumber, setStoreNumber] = useState<string>('');
+	const [storeNumber, setStoreNumber] = useLocalStorage<string>('sales-pro-store', '');
 
 	const handleAddSale = (newSales: Record<string, number>) => {
 		setSalesData((prev) => {
